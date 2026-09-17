@@ -1,26 +1,19 @@
-# UGD Smart Lockers - Backend & Plataforma Web 🎓🔒
+# Casilleros inteligentes - Plataforma Web 
 
-Este repositorio contiene la plataforma web y el servidor central (Backend) para el proyecto IoT de Casilleros Inteligentes (UGD Smart Lockers). 
+Este repositorio contiene la plataforma web y el servidor central (Backend) para el proyecto de Casilleros Inteligentes (Raccy). 
 
-> **⚠️ Nota de Despliegue:** Actualmente el proyecto se encuentra en etapa de prototipado. Todo el sistema (Servidor Java y Base de Datos MySQL) está diseñado para ejecutarse de forma **local** (`localhost`). La comunicación con el hardware (Arduino + ESP-01) se simula de manera local en la red mediante nuestra API REST a la espera de la integración física.
+>  Actualmente el proyecto se encuentra en etapa de prototipado. Todo el sistema (Servidor Java y Base de Datos MySQL) está diseñado para ejecutarse de forma **local** (`localhost`). La comunicación con el hardware (Arduino + ESP-01) se simula de manera local en la red mediante nuestra API REST a la espera de la integración física.
 
-## 🛠️ Stack Tecnológico
-* **Lenguaje:** Java
-* **Framework Backend:** Spring Boot (Spring Web, Spring Data JPA)
-* **Base de Datos:** MySQL 5.7+
-* **Frontend:** HTML5, CSS3, Thymeleaf (Server-Side Rendering)
-* **Arquitectura:** MVC (Modelo-Vista-Controlador) y API REST para Hardware.
-
-## 📋 Reglas de Negocio Implementadas (Fase 1)
+##  Reglas de Negocio Implementadas (Fase 1)
 1. **Roles de Usuario:** Sistema de autenticación manual con roles (`ALUMNO` y `ADMIN`).
 2. **Control de Reservas:** Un estudiante no puede tener más de 1 casillero reservado simultáneamente.
 3. **Registro de Tiempo:** El sistema registra y formatea automáticamente la fecha/hora de inicio de la reserva.
 4. **Modo Administrador:** El administrador tiene visibilidad total sobre los ocupantes y posee privilegios de "Forzar Liberación" sobre cualquier casillero.
-5. **Autoseed de Base de Datos:** Generación automática de casilleros y usuarios al detectar una base de datos vacía.
+5.  Generación automática de casilleros y usuarios al detectar una base de datos vacía.
 
 ---
 
-## 🚀 Guía de Instalación y Ejecución Local
+## Guía de Instalación y Ejecución Local
 
 Para los evaluadores o desarrolladores que deseen clonar y probar el sistema localmente, sigan estos pasos:
 
@@ -36,7 +29,7 @@ CREATE DATABASE smartlockers_db;
 ```
 
 ### 3. Variables de Entorno (Seguridad)
-Por normativas de ciberseguridad, las credenciales de la base de datos no están subidas a este repositorio. Antes de ejecutar el proyecto en su IDE, debe configurar las siguientes Variables de Entorno en su perfil de ejecución (*Edit Configurations -> Environment variables*):
+Las credenciales de la base de datos no están subidas a este repositorio. Antes de ejecutar el proyecto en su IDE, debe configurar las siguientes Variables de Entorno en su perfil de ejecución (*Edit Configurations -> Environment variables*):
 ```env
 DB_USER=root
 DB_PASSWORD=su_contraseña_local
@@ -47,7 +40,7 @@ Ejecute la clase `SmartlockersApplication.java`. Hibernate (JPA) se conectará a
 
 ---
 
-## 🧪 Pruebas del Sistema
+## Pruebas del Sistema
 
 Una vez que la consola indique que Tomcat ha iniciado, acceda a la plataforma desde su navegador en:  
 🔗 **http://localhost:8080**
@@ -60,7 +53,7 @@ Una vez que la consola indique que Tomcat ha iniciado, acceda a la plataforma de
 
 ---
 
-## 📡 API de Hardware (En desarrollo)
+## API de Hardware (En desarrollo)
 El sistema incluye un endpoint REST diseñado para recibir las peticiones del microcontrolador (ESP-01):
 * **GET** `/api/hardware/verificar?casilleroId={id}&pin={pin}`
 * Retorna un `JSON` indicando si el hardware debe accionar el servomotor para abrir la puerta.
