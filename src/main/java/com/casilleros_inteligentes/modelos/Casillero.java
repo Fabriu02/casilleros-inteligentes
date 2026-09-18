@@ -12,20 +12,15 @@ public class Casillero {
     private Integer numero;
 
     @Column(nullable = false)
-    private String estado;
+    private Integer estado;
 
-    @Transient
-    private String ocupadoDesde;
-
-    @Transient
-    private String ocupadoPor;
-
-    @Transient
-    private Long ocupadoPorId; // Para verificar si el usuario actual es el dueño
+    @Transient private String ocupadoDesde;
+    @Transient private String ocupadoPor;
+    @Transient private Long ocupadoPorId;
 
     public Casillero() {}
 
-    public Casillero(Integer numero, String estado) {
+    public Casillero(Integer numero, Integer estado) {
         this.numero = numero;
         this.estado = estado;
     }
@@ -34,8 +29,9 @@ public class Casillero {
     public void setId(Long id) { this.id = id; }
     public Integer getNumero() { return numero; }
     public void setNumero(Integer numero) { this.numero = numero; }
-    public String getEstado() { return estado; }
-    public void setEstado(String estado) { this.estado = estado; }
+    public Integer getEstado() { return estado; }
+    public void setEstado(Integer estado) { this.estado = estado; }
+    
     public String getOcupadoDesde() { return ocupadoDesde; }
     public void setOcupadoDesde(String ocupadoDesde) { this.ocupadoDesde = ocupadoDesde; }
     public String getOcupadoPor() { return ocupadoPor; }

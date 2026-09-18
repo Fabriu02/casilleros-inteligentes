@@ -1,0 +1,18 @@
+REGISTRO DE CAMBIOS - ACTUALIZACION DE ARQUITECTURA
+
+1. Reestructuracion del Modelo de Dominio (TarjetaRFID)
+- Se creo una nueva entidad independiente llamada TarjetaRFID para gestionar el ciclo de vida de los tokens de acceso fisico.
+- Se establecio una relacion de 1 a N entre la entidad Usuario y la entidad TarjetaRFID.
+- Se elimino el vinculo estricto del codigo RFID que previamente se encontraba de forma directa en las entidades Usuario y Casillero, aislando asi la identidad digital del usuario de su llave fisica.
+
+2. Normalizacion de Base de Datos (Estados Numericos)
+- Se refactorizaron los campos "estado" en todas las entidades centrales (Casillero, Reserva y TarjetaRFID). El tipo de dato paso de String (VARCHAR) a Integer (INT) para optimizar el almacenamiento y el rendimiento de las consultas en MySQL.
+- Se actualizaron los controladores y repositorios para operar exclusivamente con valores numericos en la logica de negocio (ej. 0 = Libre/Activo, 1 = Ocupado/Finalizado).
+
+3. Refactorizacion de la API de Hardware
+- El endpoint de validacion (/api/hardware/verificar) fue reescrito para soportar el nuevo esquema.
+- Se agrego una validacion robusta para el acceso por RFID: el sistema ahora verifica secuencialmente que la tarjeta exista en los registros, que su estado sea activo, y que el usuario propietario de dicha tarjeta coincida exactamente con el usuario que genero la reserva del casillero.
+
+4. Adaptacion del Frontend (Thymeleaf)
+- Se modificaron las estructuras condicionales en la vista gestion-casilleros.html para evaluar los nuevos estados numericos enteros en lugar de cadenas de texto. 
+- Se conservo el formateo visual, permitiendo que la interfaz siga renderizando texto legible (LIBRE / OCUPADO) para el usuario final a traves de operadores ternarios.

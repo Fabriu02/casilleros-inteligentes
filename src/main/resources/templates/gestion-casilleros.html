@@ -21,7 +21,7 @@
         .form-reserva input { width: 120px; text-align: center; margin-bottom: 8px; padding: 5px; border: none; border-radius: 4px; font-weight: bold; }
         .form-reserva button { background-color: white; color: #27ae60; font-weight: bold; border: none; padding: 5px 15px; border-radius: 4px; cursor: pointer; }
         .form-reserva button:hover { background-color: #f1f1f1; }
-
+        
         .error-msg { background-color: #ffcccc; color: #c0392b; padding: 10px; border-radius: 5px; font-weight: bold; display: inline-block; }
     </style>
 </head>
@@ -33,17 +33,19 @@
 <p th:if="${error}" class="error-msg" th:text="${error}"></p>
 
 <div class="grid-casilleros">
-    <div th:each="c : ${casilleros}" class="casillero" th:classappend="${c.estado == 'LIBRE' ? 'bg-libre' : 'bg-ocupado'}">
+    <!-- Verificamos si es 0 (LIBRE) o 1 (OCUPADO) -->
+    <div th:each="c : ${casilleros}" class="casillero" th:classappend="${c.estado == 0 ? 'bg-libre' : 'bg-ocupado'}">
 
         <h2>#<span th:text="${c.numero}">1</span></h2>
-        <p th:text="${c.estado}">ESTADO</p>
+        <!-- Traducimos el número a texto visualmente -->
+        <p th:text="${c.estado == 0 ? 'LIBRE' : 'OCUPADO'}">ESTADO</p>
 
-        <!-- SI ESTÁ OCUPADO -->
-        <div th:if="${c.estado == 'OCUPADO'}">
+        <!-- SI ESTÁ OCUPADO (1) -->
+        <div th:if="${c.estado == 1}">
             <p style="font-size: 11px; margin:0;">Desde: <br><span th:text="${c.ocupadoDesde}"></span></p>
             <p th:if="${rolUsuario == 'ADMIN'}" style="font-size: 11px; color:#ffd700; margin-top:5px;">Por: <span th:text="${c.ocupadoPor}"></span></p>
-
-            <!-- Botón Liberar (Aparece si soy ADMIN o si YO soy el dueño del casillero) -->
+            
+            <!-- Botón Liberar -->
             <form th:if="${rolUsuario == 'ADMIN' or c.ocupadoPorId == usuarioIdLogueado}" action="/liberar" method="post" style="margin-top: 10px;">
                 <input type="hidden" name="casilleroId" th:value="${c.id}">
                 <button type="submit" style="background: white; color: #c0392b; border: none; padding: 4px; border-radius: 3px; cursor: pointer; font-size:11px; font-weight:bold;">
@@ -52,10 +54,9 @@
             </form>
         </div>
 
-        <!-- SI ESTÁ LIBRE -->
-        <form th:if="${c.estado == 'LIBRE'}" class="form-reserva" action="/reservar" method="post">
+        <!-- SI ESTÁ LIBRE (0) -->
+        <form th:if="${c.estado == 0}" class="form-reserva" action="/reservar" method="post">
             <input type="hidden" name="casilleroId" th:value="${c.id}">
-            <!-- Ya NO pedimos la fecha -->
             <input type="text" name="pin" placeholder="PIN (4 núm)" required pattern="\d{4}" title="Debe contener exactamente 4 números">
             <button type="submit">Reservar</button>
         </form>

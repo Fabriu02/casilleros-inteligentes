@@ -1,11 +1,9 @@
 package com.casilleros_inteligentes.modelos;
-
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "usuarios")
 public class Usuario {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,9 +17,8 @@ public class Usuario {
     @Column(nullable = false)
     private String password;
 
-    // NUEVO: Para saber si es "ALUMNO" o "ADMIN"
     @Column(nullable = true)
-    private String rol;
+    private String rol; 
 
     public Usuario() {}
 
@@ -32,7 +29,6 @@ public class Usuario {
         this.rol = rol;
     }
 
-    // Getters y Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getNombre() { return nombre; }
